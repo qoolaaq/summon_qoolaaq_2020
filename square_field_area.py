@@ -46,6 +46,9 @@ class Square():
         self.ypos = coordinate[1]
         # coordinateをposition_numberに変換しておく
         self.position_number = self.xpos + 5*self.ypos
+        # ユニットオブジェクトを直接代入して持っておく
+        # 初期値はNoneにしておく
+        self.unit = None
         # ユニットがいるかどうかを真偽値で管理
         # self.unit_exist = True or False
         self.unit_exist = False
@@ -54,7 +57,7 @@ class Square():
         # test用
         self._test_string = "I'm for test"
     """    
-    def unit_exist_checker(self):
+    def unit_exist_reset(self):
         # あんまり良くない書き方なので、思いつき次第書き直す
         # all_unit_listから、unit.position_listの情報を引っ張ってきて、評価
         print("test")
@@ -63,11 +66,28 @@ class Square():
             if self.position_number == unit.position_number:
                 self.unit_exist = True
     """
-    def unit_exist_checker(self):
+    def unit_exist_reset(self):
+        # unit_existの値を更新する
+        # unitがそのスクエアにいれば、True、いなければFalse
         self.unit_exist = False
-        for unit in all_unit_list:
-            if self.position_number == unit.position_number:
-                self.unit_exist = True
+        if self.unit == None:
+            pass
+        else:
+            self.unit_exist = True
+
+    def unit_delete(self):
+        # unitをNoneにする
+        # unit_existはFalseにする
+        self.unit_exist = False
+        self.unit = None
+    
+    def unit_placed(self,unit):
+        # 引数としてunitオブジェクトをとる
+        # unitに引数を入れる
+        # unit_existをTrueにする
+        self.unit = unit
+        self.unit_exist = True
+
 
 class Field():
     def __init__(self):

@@ -26,7 +26,7 @@ def UnitInformationListGetter(keys):
     return data_list
 
 # 引数として名前とチームを受け取って、ユニットオブジェクトを作成する
-class UnitMaker():
+class Unit():
     # datalist: UnitInformationGetterで引っ張ってくるリスト
     # team: 文字列、敵か味方か
     # position_list: [position_type, position_number]
@@ -46,5 +46,7 @@ class UnitMaker():
         self.position_type = self.position_list[0]
         self.position_number = self.position_list[1]
 
+        """
         # selfをall_unit_listを入れる
         all_unit_list.append(self)
+        """

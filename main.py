@@ -5,7 +5,7 @@ from unit import *
 from player import *
 from bench import *
 from outside import *
-from unit_transfer import *
+from player import *
 
 """
 ---問題---

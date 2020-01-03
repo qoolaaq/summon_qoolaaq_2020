@@ -1,5 +1,11 @@
 # coding: utf-8
 
+from unit import *
+from square_field_area import *
+from player import *
+from bench import *
+from outside import *
+# from main import *
 
 def unit_transfer(unit, post_position_list):
     """
@@ -21,23 +27,41 @@ def unit_transfer(unit, post_position_list):
 def get_square_from_number(number):
     # フィールドから目的のスクエアを拾ってくる
     # 返り値はスクエアオブジェクト
-    global field 
+    global FIELD
     """
     ここで怒られる。
     """
-    for row in field:
+    for row in FIELD:
         for square in row:
             if square.number == number:
                 return square
 
-def unit_maker(data_list, team, position_list):
+def unit_maker(unit_name, team, position_list):
     # Unitを使ってユニットオブジェクトを作る
     # square.unitにオブジェクトを入れる
-    # all_unit_listにオブジェクトを追加する
+    # ALL_UNIT_LISTにオブジェクトを追加する
     global Unit
+    global Square
+    global Bench
+    global Outside
+
+    unit = Unit(unit_name, team, position_list)
+    # Unitを使ってユニットオブジェクトを作る
+
+    # return unit
+
+    ALL_UNIT_LIST.append(unit)
+    # ALL_UNIT_LISTにunitを追加する
+    
     """
-    ここで怒られる
+    position_type = position_list[0]
+    position_number = position_list[1]
+    xpos = position_number % 5
+    ypos = (position_number - xpos) / 5
+    square = FIELD[ypos][xpos]
+    # position_numberからxposとyposに変換
+    # squareをFIELDオブジェクトから拾ってくる
+    
+    square.unit_placed(unit)
+    # unit_placedメソッドでスクエアの情報を更新する
     """
-    self = Unit(data_list, team, position_list)                    
-    square = get_square_from_number(position_list[1])
-    square.unit_placed(self)

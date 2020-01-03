@@ -59,10 +59,10 @@ class Square():
     """    
     def unit_exist_reset(self):
         # あんまり良くない書き方なので、思いつき次第書き直す
-        # all_unit_listから、unit.position_listの情報を引っ張ってきて、評価
+        # ALL_UNIT_LISTから、unit.position_listの情報を引っ張ってきて、評価
         print("test")
         self.unit_exist = False
-        for unit in all_unit_list:
+        for unit in ALL_UNIT_LIST:
             if self.position_number == unit.position_number:
                 self.unit_exist = True
     """
@@ -96,17 +96,18 @@ class Field():
         self.list = [[Square([i,j]) for i in range(5)] for j in range(5)]
 
 # フィールドを作成する
-field = Field()
+# FIELD = Field()
 
 class Area():
-    # 引数はdata_list
+    # 引数はFIELDオブジェクト、data_list
     # data_list[name, coordinate]
-    def __init__(self, data_list):
+    global Field
+    def __init__(self, FIELD, data_list):
         self.name = data_list[0]
         self.central_coordinate = data_list[1]
-        # ここでfieldオブジェクトがあることを前提にしている。
+        # ここでFIELDオブジェクトがあることを前提にしている。
         # まずい。
-        self.list = [[field.list[data_list[1][0]+i][data_list[1][1]+j] for i in range(-1,2)] for j in range(-1,2)]
+        self.list = [[FIELD.list[data_list[1][0]+i][data_list[1][1]+j] for i in range(-1,2)] for j in range(-1,2)]
         # central_area.list[1][1].coordinate みたいな
 
 # {name:[name, coordinate], ... }でデータを持つ
@@ -121,16 +122,20 @@ def AreaInformationListGetter(keys):
     data_list = area_dictionary[keys]
     return data_list
 
+
+# mainに移した
+"""
 # 各エリアを作成する
 central_area = Area(AreaInformationListGetter("central_area"))
 right_upper_area = Area(AreaInformationListGetter("right_upper_area"))
 left_upper_area = Area(AreaInformationListGetter("left_upper_area"))
 left_lower_area = Area(AreaInformationListGetter("left_lower_area"))
 right_lower_area = Area(AreaInformationListGetter("right_lower_area"))
+"""
 
 """
 print(central_area.list[1][1]._test_string)
 central_area.list[1][1]._test_string = "I'm changed"
 print(central_area.list[1][1]._test_string)
-print(field.list[2][2]._test_string)
+print(FIELD.list[2][2]._test_string)
 """

@@ -1,12 +1,14 @@
 import sys
 import pygame
-from pygame.locals import  QUIT
+from pygame.locals import  QUIT, Rect
 
 pygame.init()
 # pygameを使うアプリでは必ず最初に呼び出す必要がある
-SURFACE = pygame.display.set_mode((400,300))
+WIDTH = 400
+HEIGHT = 300
+SURFACE = pygame.display.set_mode((WIDTH,HEIGHT))
 # サイズを指定してウィンドウを表示
-# 引数は(width, height)
+# 引数は(WIDTH, HEIGHT)
 pygame.display.set_caption("Just Window")
 # ウィンドウのタイトル
 FPSCLOCK = pygame.time.Clock()
@@ -14,23 +16,28 @@ FPSCLOCK = pygame.time.Clock()
 
 def main():
     """main routine"""
-    sysfont = pygame.font.SysFont(None, 36)
-    counter = 0
+    sysfont = pygame.font.SysFont(None, 50)
 
     while True:
         for event in pygame.event.get(QUIT):
         # イベントキューからイベントを取得する
-            pygame.quit()
-            sys.exit()
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
 
-        counter += 1
-
-        SURFACE.fill((0,0,0))
+        SURFACE.fill((0, 0, 0))
         # SURFACEの中身をタプル()で塗りつぶす
         # (R,G,B)
         # (255,255,255)で白
-        count_image = sysfont.render("count is {}".format(counter), True, (255, 255, 255))
-        SURFACE.blit(count_image, (50,50))
+
+        for xpos in range(0, 400, 25):
+            pygame.draw.line(SURFACE, 0xFFFFF, (xpos, 0), (xpos, 300))
+            # (SURFACE, 色(0xFFFFF), 始点(xpos, ypos), 終点(xpos, ypos))
+        
+        for ypos in range(0, 300, 25):
+            pygame.draw.line(SURFACE, 0xFFFFF, (0, ypos), (400, ypos))
+            # (SURFACE, 色(0xFFFFF), 始点(xpos, ypos), 終点(xpos, ypos))
+
         pygame.display.update()
         # プログラム内で描画した内容を反映させる
         FPSCLOCK.tick(10)

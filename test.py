@@ -38,7 +38,3 @@ def UnitMaker(name, number):
 
 Alice = UnitMaker("Alice", 0)
 print(squareA.unit.name)
-
-
-a = 10 % 3
-print(a)

@@ -1,15 +1,24 @@
-gvar = 'abcdefg'
- 
-class func:
-    global gvar
-    gvar = "changed in func"
+class Unit:
+    ALL_UNIT_LIST = []
+    def __init__(self, name):
+        self.name = name
+        Unit.ALL_UNIT_LIST.append(self)
 
-class testfunc():
-    def reset(self):
-        global gvar
-        gvar = '0123456'
-    print(gvar)
- 
-print(gvar)
-testfunc().reset()
-print(gvar)
+Alice = Unit("Alice")
+Becky = Unit("Becky")
+# # print(Unit.ALL_UNIT_LIST[1].name)
+
+# list = Unit.ALL_UNIT_LIST
+# list[0].name = "changed"
+
+# print(Unit.ALL_UNIT_LIST[0].name)
+
+print(Unit.ALL_UNIT_LIST)
+
+# print(id(Unit.ALL_UNIT_LIST))
+# print(id(Alice.ALL_UNIT_LIST))
+# print(id(Becky.ALL_UNIT_LIST))
+
+print(id(Alice.name))
+print(id(Becky.name))
+print(id(Unit.name))

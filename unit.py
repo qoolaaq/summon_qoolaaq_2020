@@ -33,6 +33,7 @@ class Unit():
     # position_list: [position_type, position_number]
     # position_type: "field", "bench", "outside"
     # position_number: int(0~24)
+    classval = "test"
     def __init__(self, unit_name, team, position_list):
         # UnitInformationGetterでnameから情報を引っ張ってきてプロパティを定義する。
         # datalist = [name, color, skill]

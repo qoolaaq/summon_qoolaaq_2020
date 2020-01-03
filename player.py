@@ -24,10 +24,9 @@ def unit_transfer(unit, post_position_list):
     unit.position_type = unit.position_list[0]
     unit.position_number = unit.position_list[1]
 
-def get_square_from_number(number):
+def get_square_from_number(number, FIELD):
     # フィールドから目的のスクエアを拾ってくる
     # 返り値はスクエアオブジェクト
-    global FIELD
     """
     ここで怒られる。
     """
@@ -36,7 +35,7 @@ def get_square_from_number(number):
             if square.number == number:
                 return square
 
-def unit_maker(unit_name, team, position_list):
+def unit_maker(unit_name, team, position_list, ALL_UNIT_LIST):
     # Unitを使ってユニットオブジェクトを作る
     # square.unitにオブジェクトを入れる
     # ALL_UNIT_LISTにオブジェクトを追加する

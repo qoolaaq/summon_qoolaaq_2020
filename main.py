@@ -32,10 +32,12 @@ BENCH = Bench("friend")
 OUTSIDE = Outside("friend")
 
 # unit_maker("Alice", "friend", ["field", 0])
-# Alice = Unit("Alice", "friend", ["field", 0])
+Alice = Unit("Alice", "friend", ["field", 0])
 
-Alice = unit_maker("Alice", "friend", ["field", 0])
+# Alice = unit_maker("Alice", "friend", ["field", 0])
 ALL_UNIT_LIST.append(Alice)
 FIELD.list[0][0].unit_placed(Alice)
 
-print(LEFT_UPPER_AREA.list[0][0].unit.name)
+print(id(LEFT_UPPER_AREA.list[0][0].unit))
+print(id(FIELD.list[0][0].unit))
+print(id(Alice))

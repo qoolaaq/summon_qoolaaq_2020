@@ -2,10 +2,10 @@
 
 from unit import *
 from square_field_area import *
-from player import *
+from action import *
 from bench import *
 from outside import *
-from player import *
+from action import *
 
 """
 ---問題---

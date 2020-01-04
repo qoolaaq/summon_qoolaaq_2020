@@ -2,6 +2,8 @@ import sys
 import pygame
 from pygame.locals import  QUIT, Rect, MOUSEBUTTONDOWN
 
+import game_initilizer
+
 pygame.init()
 # pygameを使うアプリでは必ず最初に呼び出す必要がある
 WIDTH = 640
@@ -9,7 +11,7 @@ HEIGHT = 360
 SURFACE = pygame.display.set_mode((WIDTH,HEIGHT))
 # サイズを指定してウィンドウを表示
 # 引数は(WIDTH, HEIGHT)
-pygame.display.set_caption("Just Window")
+pygame.display.set_caption("summon_qoolaaq")
 # ウィンドウのタイトル
 FPSCLOCK = pygame.time.Clock()
 # クロックオブジェクトを作り、変数をFPSCLOCKに格納する
@@ -102,4 +104,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

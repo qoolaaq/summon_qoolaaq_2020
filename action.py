@@ -50,7 +50,7 @@ def unit_maker(unit_name, team, position_list, ALL_UNIT_LIST):
 
     ALL_UNIT_LIST.append(unit)
     # ALL_UNIT_LISTにunitを追加する
-    
+
     """
     position_type = position_list[0]
     position_number = position_list[1]

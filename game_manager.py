@@ -8,36 +8,22 @@ from outside import *
 from action import *
 
 """
----問題---
-unit_exist_resetが機能しない
-fieldとALL_UNIT_LISTが定義されないのがきつい
-構造上の問題な気がする
-変数のスコープがややこしくなっているので、ほどく必要がある
+mainから座標を受け取って、残り全ての動作をここで行う
+グローバル変数を参照出来ないので、
+引数として全部受け取っておく
 """
 
-# グローバル変数を宣言していく
-# すべてのユニットをALL_UNIT_LISTに入れる
-ALL_UNIT_LIST = []
-# フィールド
-FIELD = Field()
-# 各エリアを作成する
-CENTRAL_AREA = Area(FIELD, AreaInformationListGetter("central_area"))
-RIGHT_UPPER_AREA = Area(FIELD, AreaInformationListGetter("right_upper_area"))
-LEFT_UPPER_AREA = Area(FIELD, AreaInformationListGetter("left_upper_area"))
-LEFT_LOWER_AREA = Area(FIELD, AreaInformationListGetter("left_lower_area"))
-RIGHT_LOWER_AREA = Area(FIELD, AreaInformationListGetter("right_lower_area"))
-# ベンチ
-BENCH = Bench("friend")
-# アウトサイド
-OUTSIDE = Outside("friend")
 
-# unit_maker("Alice", "friend", ["field", 0])
-Alice = Unit("Alice", "friend", ["field", 0])
+##### ここを書く ######
+def game_manage(ALL_UNIT_LIST, FIELD, \
+    ALL_AREA_LIST, ALL_BENCH_LIST, ALL_OUTSIDE_LIST, \
+        STARTING_MEMBER_LIST, click_position):
+    # click_positionはクリックした座標
+    # [2, 3]みたいな形で取得する
 
-# Alice = unit_maker("Alice", "friend", ["field", 0])
-ALL_UNIT_LIST.append(Alice)
-FIELD.list[0][0].unit_placed(Alice)
-
-print(id(LEFT_UPPER_AREA.list[0][0].unit))
-print(id(FIELD.list[0][0].unit))
-print(id(Alice))
+    def unit_place(unit, click_position):
+        """
+        click_positionの座標にunitを置く
+        """
+        pass
+    pass

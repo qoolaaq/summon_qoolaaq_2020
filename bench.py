@@ -6,8 +6,7 @@
 
 """
 
-class Bench():
+class Bench(list):
     # teamは文字列としてデータを持っておく
     def __init__(self, team):
-        self.list = []
         self.team = team

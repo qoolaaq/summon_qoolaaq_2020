@@ -9,40 +9,46 @@ from action import *
 
 """
 ゲームを始めるときに読み込むモジュール
+
+グローバル変数を参照出来ないので、
+引数として全部受け取っておく
 """
 
 """
----問題---
-unit_exist_resetが機能しない
-fieldとALL_UNIT_LISTが定義されないのがきつい
-構造上の問題な気がする
-変数のスコープがややこしくなっているので、ほどく必要がある
+スターティングメンバーのリストを作っておく
+今はとりあえず書いてる
 """
+def friend_starting_menber_list_get():
+    return ["Alice", "Becky", "Cashy"]
 
-# グローバル変数を宣言していく
-# すべてのユニットをALL_UNIT_LISTに入れる
-ALL_UNIT_LIST = []
-# フィールド
-FIELD = Field()
-# 各エリアを作成する
-CENTRAL_AREA = Area(FIELD, AreaInformationListGetter("central_area"))
-RIGHT_UPPER_AREA = Area(FIELD, AreaInformationListGetter("right_upper_area"))
-LEFT_UPPER_AREA = Area(FIELD, AreaInformationListGetter("left_upper_area"))
-LEFT_LOWER_AREA = Area(FIELD, AreaInformationListGetter("left_lower_area"))
-RIGHT_LOWER_AREA = Area(FIELD, AreaInformationListGetter("right_lower_area"))
-# ベンチ
-BENCH = Bench("friend")
-# アウトサイド
-OUTSIDE = Outside("friend")
+def game_initialize(ALL_UNIT_LIST, FIELD, \
+    ALL_AREA_LIST, ALL_BENCH_LIST, ALL_OUTSIDE_LIST, \
+        STARTING_MEMBER_LIST):
+    # とりあえずゲームロジックで使う全部の要素を受け取る
 
-# unit_maker("Alice", "friend", ["field", 0])
-Alice = Unit("Alice", "friend", ["field", 0])
+    def unit_generate(unit_name, team):
+        """
+        そのチームのユニットを作る
+        """
+        return Unit(unit_name, team)
+        pass
 
-# Alice = unit_maker("Alice", "friend", ["field", 0])
-ALL_UNIT_LIST.append(Alice)
-FIELD.list[0][0].unit_placed(Alice)
+    def unit_register_to_bench(unit, bench):
+        """
+        ユニットをベンチに入れる
+        引数はユニットとベンチにする
+        """
+        bench.append(unit)
 
+    def unit_register_to_ALL_UNIT_LIST(unit, ALL_UNIT_LIST):
+        """
+        ユニットをベンチに入れる
+        引数はユニットとALL_UNIT_LISTにする
+        """
+        ALL_UNIT_LIST.append(unit)
 
-# print(id(LEFT_UPPER_AREA.list[0][0].unit))
-# print(id(FIELD.list[0][0].unit))
-# print(id(Alice))
+    for unit_name in STARTING_MEMBER_LIST:
+        unit = unit_generate(unit_name, "FRIEND")
+        unit_register_to_bench(unit, ALL_BENCH_LIST[0])
+        unit_register_to_ALL_UNIT_LIST(unit, ALL_UNIT_LIST)
+        # ここは後で変える

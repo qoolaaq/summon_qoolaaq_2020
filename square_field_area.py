@@ -40,7 +40,8 @@ class Square():
     # 位置情報、ユニットの有無、エフェクトを管理
     def __init__(self, coordinate):
         # 位置情報を受け取って、二次元リストでデータを持っておく
-        # coordinate = [xpos, ypos], [ypos][xpos]となる
+        # coordinate = [xpos, ypos]
+        # Fieldオブジェクトでは、FIELD[ypos][xpos]となる
         self.coordinate = coordinate
         self.xpos = coordinate[0]
         self.ypos = coordinate[1]
@@ -54,18 +55,9 @@ class Square():
         self.unit_exist = False
         # エフェクトをリストで管理しておく
         self.effect_list = []
-        # test用
-        self._test_string = "I'm for test"
-    """    
-    def unit_exist_reset(self):
-        # あんまり良くない書き方なので、思いつき次第書き直す
-        # ALL_UNIT_LISTから、unit.position_listの情報を引っ張ってきて、評価
-        print("test")
-        self.unit_exist = False
-        for unit in ALL_UNIT_LIST:
-            if self.position_number == unit.position_number:
-                self.unit_exist = True
-    """
+        # # test用
+        # self._test_string = "I'm for test"
+
     def unit_exist_reset(self):
         # unit_existの値を更新する
         # unitがそのスクエアにいれば、True、いなければFalse
@@ -80,7 +72,7 @@ class Square():
         # unit_existはFalseにする
         self.unit_exist = False
         self.unit = None
-    
+
     def unit_placed(self,unit):
         # 引数としてunitオブジェクトをとる
         # unitに引数を入れる
@@ -88,27 +80,43 @@ class Square():
         self.unit = unit
         self.unit_exist = True
 
-
-class Field():
+class Field(list):
+    # 5*5の2次元リストオブジェクトを作成する
+    # 各要素はすべてsquareオブジェクトとなっている
     def __init__(self):
+        for row in Field.__field_maker():
+            self.append(row)
+        # 割と強引に作った
+        # field_maker()の返り値が作りたいオブジェクトそのものなのだが、
+        # self = Field.field_maker()と出来なかったので、一度バラして突っ込んだ。
+    def __field_maker():
         # このあたり事故る可能性ある
         # coordinate = [xpos, ypos], [ypos][xpos]となる
-        self.list = [[Square([i,j]) for i in range(5)] for j in range(5)]
+        return [[Square([i,j]) for i in range(5)] for j in range(5)]
 
-# フィールドを作成する
-# FIELD = Field()
-
-class Area():
+class Area(list):
     # 引数はFIELDオブジェクト、data_list
     # data_list[name, coordinate]
     global Field
-    def __init__(self, FIELD, data_list):
+    def __init__(self, FIELD, area_name):
+        data_list = Area.__area_information_list_getter(area_name)
+        # data_list = [名前, 中央のsquareの座標]
         self.name = data_list[0]
         self.central_coordinate = data_list[1]
         # ここでFIELDオブジェクトがあることを前提にしている。
         # まずい。
-        self.list = [[FIELD.list[data_list[1][0]+i][data_list[1][1]+j] for i in range(-1,2)] for j in range(-1,2)]
+        for row in Area.__area_maker(self, FIELD, data_list):
+            self.append(row)
+        # 割と強引に作った
+        # area_maker()の返り値が作りたいオブジェクトそのものなのだが、
+        # self = Area.area_maker()と出来なかったので、一度バラして突っ込んだ。
         # central_area.list[1][1].coordinate みたいな
+    def __area_maker(self, FIELD, data_list):
+        return [[FIELD[data_list[1][0]+i][data_list[1][1]+j] for i in range(-1,2)] for j in range(-1,2)]
+        # 割と強引に作った
+    def __area_information_list_getter(keys):
+        data_list = area_dictionary[keys]
+        return data_list
 
 # {name:[name, coordinate], ... }でデータを持つ
 area_dictionary = \
@@ -118,24 +126,18 @@ area_dictionary = \
                  "left_lower_area":["left_lower_area", [1,3]], \
                      "right_lower_area":["right_lower_area", [3,3]]}
 
-def AreaInformationListGetter(keys):
-    data_list = area_dictionary[keys]
-    return data_list
-
-
+"""
 # mainに移した
-"""
-# 各エリアを作成する
-central_area = Area(AreaInformationListGetter("central_area"))
-right_upper_area = Area(AreaInformationListGetter("right_upper_area"))
-left_upper_area = Area(AreaInformationListGetter("left_upper_area"))
-left_lower_area = Area(AreaInformationListGetter("left_lower_area"))
-right_lower_area = Area(AreaInformationListGetter("right_lower_area"))
-"""
 
-"""
-print(central_area.list[1][1]._test_string)
-central_area.list[1][1]._test_string = "I'm changed"
-print(central_area.list[1][1]._test_string)
-print(FIELD.list[2][2]._test_string)
+FIELD = Field()
+
+# 各エリアを作成する
+CENTRAL_AREA = Area(FIELD, "central_area")
+RIGHT_UPPER_AREA = Area(FIELD, "right_upper_area")
+LEFT_UPPER_AREA = Area(FIELD, "left_upper_area")
+LEFT_LOWER_AREA = Area(FIELD, "left_lower_area")
+RIGHT_LOWER_AREA = Area(FIELD, "right_lower_area")
+# 全てのエリアを統括するリストを作成する
+ALL_AREA_LIST = [CENTRAL_AREA, RIGHT_UPPER_AREA, LEFT_LOWER_AREA, \
+    RIGHT_UPPER_AREA]
 """

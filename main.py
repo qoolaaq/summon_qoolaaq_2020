@@ -2,7 +2,7 @@
 
 import sys
 import pygame
-from pygame.locals import  QUIT, Rect, MOUSEBUTTONDOWN
+from pygame.locals import  QUIT, Rect, MOUSEBUTTONDOWN, MOUSEMOTION
 
 from unit import *
 from square_field_area import *
@@ -62,12 +62,23 @@ GameLogicの描画で使うオブジェクトをここで宣言しておく
 """
 FIELD_PANEL_SIZE = 50
 FIELD_PANELS = \
-    [[Panel([30 + i * (FIELD_PANEL_SIZE + 10), 30 + j * (FIELD_PANEL_SIZE + 10)],\
+    [[FieldPanel([30 + i * (FIELD_PANEL_SIZE + 10), 30 + j * (FIELD_PANEL_SIZE + 10)],\
          FIELD_PANEL_SIZE)\
          for i in range(5)] for j in range(5)]
 # フィールドを表示するパネルを生成する
 # [30, 30]はパネルの開始地点
 # パネル間を10としている
+
+BENCH_PANEL_SIZE = 30
+OUTSID_PANEL_SIZE = 30
+FRIEND_BENCH_PANELS = OtherPanels(BENCH_PANEL_SIZE)
+ENEMYS_BENCH_PANELS = OtherPanels(BENCH_PANEL_SIZE)
+FRIEND_OUTSIDE_PANELS = OtherPanels(OUTSID_PANEL_SIZE)
+ENEMY_OUTSIDE_PANELS = OtherPanels(OUTSID_PANEL_SIZE)
+ALL_OTHER_PANELS =\
+    [FRIEND_BENCH_PANELS, ENEMYS_BENCH_PANELS, \
+        FRIEND_OUTSIDE_PANELS, ENEMY_OUTSIDE_PANELS]
+# ベンチもアウトサイドも描画にはパネルを使うことにした
 
 
 """
@@ -130,6 +141,16 @@ def main():
             #####
             # ここで、マウスのクリックを座標に変換する
             #####
+            elif event.type == MOUSEMOTION:
+                for row in FIELD_PANELS:
+                    for panel in row:
+                        # print("test {}".format(event.pos))
+                        if (panel.position[0] < event.pos[0] < panel.position[0] + panel.size)  \
+                            and (panel.position[1] < event.pos[1] < panel.position[1] + panel.size):
+                            # マウスが動かされた場所がpaneleの範囲内なら、その座標をmouse_positionに入れる
+                            mouse_position = panel.square.coordinate
+                            if panel.square.unit_exist:
+                                print(panel.square.unit.name)
             elif event.type == MOUSEBUTTONDOWN:
                 # mousepos.append(event.pos)
                 # マウスの座標＝event.posでタプルとして取得
@@ -150,13 +171,33 @@ def main():
                             """
                             game_manage(ALL_UNIT_LIST, FIELD, ALL_AREA_LIST, ALL_BENCH_LIST, ALL_OUTSIDE_LIST, FRIEND_STARTING_MEMBER_LIST, click_position)
                             # とりあえず今はFRIENDのユニットのみを出している
-                            
+
                             """
                             描画を更新する
                             """
-                            for row in FIELD_PANELS:
-                                for field_panel in row:
-                                    field_panel.flag_reset()
+                            # for row in FIELD_PANELS:
+                            #     for field_panel in row:
+                            #         field_panel.flag_reset()
+
+                            # FRIEND_BENCH_PANELS.panel_make_from_list(FRIEND_BENCH)
+                            # # ターンが終わり次第、各OTHER_PANELSの中身をリセットする
+                            # # とりあえずFRIEND_BENCH_PANELSのみ処理する
+                            # # とりあえずFRIEND_BENCH_PANELSのみ描画する
+                            # # あとで他のOTHER_PANELSも処理する(20/01/05)
+        """
+        描画を更新する
+        """
+        for row in FIELD_PANELS:
+            for field_panel in row:
+                field_panel.flag_reset()
+        # FIELD_PANELの描写の更新
+        
+        # for panel in FRIEND_BENCH_PANELS:
+        #     pygame.draw.rect(SURFACE, panel.color, \
+        #         (panel.position[0] + panel.number * 40, panel.position[1], panel.size, panel.size))
+        # # とりあえずFRIEND_BENCH_PANELSのみ描画する
+        # # あとで他のOTHER_PANELSも描画する(20/01/05)
+
         pygame.display.update()
         # プログラム内で描画した内容を反映させる
         FPSCLOCK.tick(10)

@@ -67,3 +67,8 @@ class Unit():
         self.position_type = position_list[0]
         self.position_number = position_list[1]
         self.position_list = position_list
+    def position_number_return(self):
+        """
+        position_numberを返す
+        """
+        return self.position_number

@@ -48,8 +48,13 @@ LEFT_LOWER_AREA = Area(FIELD, "left_lower_area")
 RIGHT_LOWER_AREA = Area(FIELD, "right_lower_area")
 # 全てのエリアを統括するリストを作成する
 # 中央から反時計周りで格納する
-ALL_AREA_LIST = [CENTRAL_AREA, RIGHT_UPPER_AREA,LEFT_UPPER_AREA, \
-    LEFT_LOWER_AREA, RIGHT_UPPER_AREA]
+ALL_AREA_LIST = [
+    CENTRAL_AREA,
+    RIGHT_UPPER_AREA,
+    LEFT_UPPER_AREA,
+    LEFT_LOWER_AREA,
+    RIGHT_UPPER_AREA
+]
 # ベンチ
 FRIEND_BENCH = Bench("friend")
 ALL_BENCH_LIST = [FRIEND_BENCH]
@@ -75,9 +80,12 @@ FRIEND_BENCH_PANELS = OtherPanels(BENCH_PANEL_SIZE)
 ENEMYS_BENCH_PANELS = OtherPanels(BENCH_PANEL_SIZE)
 FRIEND_OUTSIDE_PANELS = OtherPanels(OUTSID_PANEL_SIZE)
 ENEMY_OUTSIDE_PANELS = OtherPanels(OUTSID_PANEL_SIZE)
-ALL_OTHER_PANELS =\
-    [FRIEND_BENCH_PANELS, ENEMYS_BENCH_PANELS, \
-        FRIEND_OUTSIDE_PANELS, ENEMY_OUTSIDE_PANELS]
+ALL_OTHER_PANELS = [
+    FRIEND_BENCH_PANELS,
+    ENEMYS_BENCH_PANELS,
+    FRIEND_OUTSIDE_PANELS,
+    ENEMY_OUTSIDE_PANELS
+]
 # ベンチもアウトサイドも描画にはパネルを使うことにした
 
 
@@ -129,7 +137,8 @@ def main():
         """
         for row in FIELD_PANELS:
             for panel in row:
-                pygame.draw.rect(SURFACE, panel.color, (panel.position[0], panel.position[1], panel.size, panel.size))
+                pygame.draw.rect(SURFACE, panel.color, \
+                    (panel.position[0], panel.position[1], panel.size, panel.size))
                 # panel.position -> [xpos, ypos]
 
         for event in pygame.event.get():
@@ -169,7 +178,15 @@ def main():
                             ここで、panel.square.position_coordinateをLogic側に渡す
                             GameLogicを実際に動かす
                             """
-                            game_manage(ALL_UNIT_LIST, FIELD, ALL_AREA_LIST, ALL_BENCH_LIST, ALL_OUTSIDE_LIST, FRIEND_STARTING_MEMBER_LIST, click_position)
+                            game_manage(
+                                ALL_UNIT_LIST,
+                                FIELD,
+                                ALL_AREA_LIST,
+                                ALL_BENCH_LIST,
+                                ALL_OUTSIDE_LIST,
+                                FRIEND_STARTING_MEMBER_LIST,
+                                click_position
+                            )
                             # とりあえず今はFRIENDのユニットのみを出している
 
                             """

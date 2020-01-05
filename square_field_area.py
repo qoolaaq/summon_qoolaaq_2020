@@ -143,12 +143,14 @@ class Area(list):
         return data_list
 
 # {name:[name, coordinate], ... }でデータを持つ
-area_dictionary = \
-     {"central_area":["central_area", [2,2]], \
-         "right_upper_area":["right_upper_area", [3,1]], \
-             "left_upper_area":["left_upper_area", [1,1]], \
-                 "left_lower_area":["left_lower_area", [1,3]], \
-                     "right_lower_area":["right_lower_area", [3,3]]}
+area_dictionary = {
+    "central_area":["central_area", [2,2]],
+    "right_upper_area":["right_upper_area", [3,1]],
+    "left_upper_area":["left_upper_area", [1,1]],
+    "left_lower_area":["left_lower_area", [1,3]],
+    "right_lower_area":["right_lower_area", [3,3]]
+}
+
 
 """
 # mainに移した

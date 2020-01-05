@@ -17,10 +17,11 @@ def skill_of_Cashy():
 # ユニットの名前、カラーの辞書型データ
 # 名前：［名前、カラー, スキル］
 # パワーは実装しないことにした
-unit_dictionary = \
-    {"Alice" : ["Alice", "Red", skill_of_Alice], \
-        "Becky" : ["Becky", "Red", skill_of_Becky], \
-            "Cashy" : ["Cashy", "Red", skill_of_Cashy]}
+unit_dictionary = {
+    "Alice" : ["Alice", "Red", skill_of_Alice],
+    "Becky" : ["Becky", "Red", skill_of_Becky],
+    "Cashy" : ["Cashy", "Red", skill_of_Cashy]
+}
 
 # 名前を引数として受け取って、UnitDictionaryからリストとして情報を引っ張ってくる
 # name → datalist = [name, color, skill]

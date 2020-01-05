@@ -21,9 +21,10 @@ from action import *
 def friend_starting_menber_list_get():
     return ["Alice", "Becky", "Cashy"]
 
-def game_initialize(ALL_UNIT_LIST, FIELD, \
-    ALL_AREA_LIST, ALL_BENCH_LIST, ALL_OUTSIDE_LIST, \
-        STARTING_MEMBER_LIST):
+def game_initialize(
+    ALL_UNIT_LIST, FIELD, ALL_AREA_LIST,
+    ALL_BENCH_LIST, ALL_OUTSIDE_LIST,
+    STARTING_MEMBER_LIST):
     # とりあえずゲームロジックで使う全部の要素を受け取る
 
     def unit_generate(unit_name, team):

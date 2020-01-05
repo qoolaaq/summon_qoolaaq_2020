@@ -43,7 +43,7 @@ def game_initialize(ALL_UNIT_LIST, FIELD, \
     def unit_position_list_change_to_bench(unit, bench):
         """
         ユニットのposition_listを変える
-        ["bench", number]
+        position_list = ["bench", number]
         """
         position_list = bench.position_list_get(unit)
         unit.position_list_change(position_list)

@@ -138,22 +138,25 @@ def main():
                         # print("test {}".format(event.pos))
                         if (panel.position[0] < event.pos[0] < panel.position[0] + panel.size)  \
                             and (panel.position[1] < event.pos[1] < panel.position[1] + panel.size):
-                            # クリックされた場所がpaneleの範囲内なら、そのpanelのmake_flag_changeを行う
-                            panel.make_flag_change()
-                            print(panel.square.coordinate)
+                            # クリックされた場所がpaneleの範囲内なら、その座標をclick_positionに入れる
+                            click_position = panel.square.coordinate
+
+                            print("clicked position is", click_position)
                             # for test
                             # ちゃんと指定したところに描写されているのか
                             """
-                            ここで、panel.square.position_coordinateをLogic側に渡す。
+                            ここで、panel.square.position_coordinateをLogic側に渡す
+                            GameLogicを実際に動かす
                             """
-                            click_position = panel.square.coordinate
                             game_manage(ALL_UNIT_LIST, FIELD, ALL_AREA_LIST, ALL_BENCH_LIST, ALL_OUTSIDE_LIST, FRIEND_STARTING_MEMBER_LIST, click_position)
                             # とりあえず今はFRIENDのユニットのみを出している
+                            
                             """
-                            for test
+                            描画を更新する
                             """
-                            # print(panel.square.unit.name)
-                            # print(panel.square.unit.position_type)
+                            for row in FIELD_PANELS:
+                                for field_panel in row:
+                                    field_panel.flag_reset()
         pygame.display.update()
         # プログラム内で描画した内容を反映させる
         FPSCLOCK.tick(10)

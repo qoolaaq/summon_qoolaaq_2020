@@ -78,9 +78,11 @@ class Square():
         self.unit = None
 
     def unit_place(self,unit):
-        # 引数としてunitオブジェクトをとる
-        # unitに引数を入れる
-        # unit_existをTrueにする
+        """
+        引数としてunitオブジェクトをとる
+        square.unitに引数を入れる
+        unit_existをTrueにする
+        """
         self.unit = unit
         self.unit_exist = True
 
@@ -88,6 +90,9 @@ class Square():
         self.effect_list.append(effect)
 
     def unit_placable_get(self):
+        """
+        unit_exist: boolを返す
+        """
         return self.unit_exist
 
     def type_get(self):

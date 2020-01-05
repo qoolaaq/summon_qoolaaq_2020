@@ -18,6 +18,9 @@ class Panel:
         self.square = None
 
     def make_flag_change(self):
+        """
+        flagを反転させて、colorプロパティを変える
+        """
         self.flag = not self.flag
         if self.flag == True:
             self.color = Panel.color_exist
@@ -26,3 +29,14 @@ class Panel:
 
     def get_square(self, square):
         self.square = square
+
+    def flag_reset(self):
+        """
+        unit.existがTrueなら、flagをTrueにして描画させる
+        """
+        self.flag = self.square.unit_exist
+        # print("flag.reset is called")
+        if self.flag == True:
+            self.color = Panel.color_exist
+        else:
+            self.color = Panel.color_none

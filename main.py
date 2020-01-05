@@ -92,6 +92,12 @@ game_initialize(ALL_UNIT_LIST, FIELD, \
     ALL_AREA_LIST, ALL_BENCH_LIST, ALL_OUTSIDE_LIST, \
         FRIEND_STARTING_MEMBER_LIST)
 
+# for test
+print("game is started")
+for unit in ALL_UNIT_LIST:
+    print(unit.name)
+    print(unit.position_list)
+
 """
 以下、メインルーティン
 """
@@ -140,7 +146,14 @@ def main():
                             """
                             ここで、panel.square.position_coordinateをLogic側に渡す。
                             """
-
+                            click_position = panel.square.coordinate
+                            game_manage(ALL_UNIT_LIST, FIELD, ALL_AREA_LIST, ALL_BENCH_LIST, ALL_OUTSIDE_LIST, FRIEND_STARTING_MEMBER_LIST, click_position)
+                            # とりあえず今はFRIENDのユニットのみを出している
+                            """
+                            for test
+                            """
+                            # print(panel.square.unit.name)
+                            # print(panel.square.unit.position_type)
         pygame.display.update()
         # プログラム内で描画した内容を反映させる
         FPSCLOCK.tick(10)

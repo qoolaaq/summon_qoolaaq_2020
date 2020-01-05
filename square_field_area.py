@@ -57,6 +57,10 @@ class Square():
         self.effect_list = []
         # # test用
         # self._test_string = "I'm for test"
+        self.type = "square"
+        # unitオブジェクトのタイプをこっから引っ張ってくる
+        self.position_list = [self.type, self.position_number]
+        # position_listを各自持っておく
 
     def unit_exist_reset(self):
         # unit_existの値を更新する
@@ -73,23 +77,38 @@ class Square():
         self.unit_exist = False
         self.unit = None
 
-    def unit_placed(self,unit):
+    def unit_place(self,unit):
         # 引数としてunitオブジェクトをとる
         # unitに引数を入れる
         # unit_existをTrueにする
         self.unit = unit
         self.unit_exist = True
 
+    def add_effect(self, effect):
+        self.effect_list.append(effect)
+
+    def unit_placable_get(self):
+        return self.unit_exist
+
+    def type_get(self):
+        return self.type
+
+    def position_list_get(self):
+        """
+        squareのposition_listを返す
+        """
+        return self.position_list
+
 class Field(list):
     # 5*5の2次元リストオブジェクトを作成する
     # 各要素はすべてsquareオブジェクトとなっている
     def __init__(self):
-        for row in Field.__field_maker():
+        for row in Field.__field_make():
             self.append(row)
         # 割と強引に作った
         # field_maker()の返り値が作りたいオブジェクトそのものなのだが、
         # self = Field.field_maker()と出来なかったので、一度バラして突っ込んだ。
-    def __field_maker():
+    def __field_make():
         # このあたり事故る可能性ある
         # coordinate = [xpos, ypos], [ypos][xpos]となる
         return [[Square([i,j]) for i in range(5)] for j in range(5)]
@@ -99,22 +118,22 @@ class Area(list):
     # data_list[name, coordinate]
     global Field
     def __init__(self, FIELD, area_name):
-        data_list = Area.__area_information_list_getter(area_name)
+        data_list = Area.__area_information_list_get(area_name)
         # data_list = [名前, 中央のsquareの座標]
         self.name = data_list[0]
         self.central_coordinate = data_list[1]
         # ここでFIELDオブジェクトがあることを前提にしている。
         # まずい。
-        for row in Area.__area_maker(self, FIELD, data_list):
+        for row in Area.__area_make(self, FIELD, data_list):
             self.append(row)
         # 割と強引に作った
         # area_maker()の返り値が作りたいオブジェクトそのものなのだが、
         # self = Area.area_maker()と出来なかったので、一度バラして突っ込んだ。
         # central_area.list[1][1].coordinate みたいな
-    def __area_maker(self, FIELD, data_list):
+    def __area_make(self, FIELD, data_list):
         return [[FIELD[data_list[1][0]+i][data_list[1][1]+j] for i in range(-1,2)] for j in range(-1,2)]
         # 割と強引に作った
-    def __area_information_list_getter(keys):
+    def __area_information_list_get(keys):
         data_list = area_dictionary[keys]
         return data_list
 

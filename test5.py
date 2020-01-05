@@ -1,6 +1,7 @@
-class Field(list):
-    pass
+listA = ["a", "b", "c"]
 
-FIELD = Field()
-FIELD.append("hello")
-print(FIELD[0])
+print(listA)
+
+element = listA.pop(0)
+
+print(listA)

@@ -33,8 +33,10 @@ class Unit():
     # datalist: UnitInformationGetterで引っ張ってくるリスト
     # team: 文字列、敵か味方か
     # position_list: [position_type, position_number]
-    # position_type: "field", "bench", "outside"
+    # position_type: "square", "bench", "outside"
+    # "field"よりもsquareにした方が良さそうだったので変えた(20/01/05)
     # position_number: int(0~24)
+    # position_typeとnumberは紐付いてないと意味ないので、リストで持つ
     def __init__(self, unit_name: str, team):
         # UnitInformationGetterでnameから情報を引っ張ってきてプロパティを定義する。
         # datalist = [name, color, skill]
@@ -46,6 +48,22 @@ class Unit():
         self.team = team
 
         # 位置情報をプロパティとして紐付ける
-        self.position_list = None
         self.position_type = None
         self.position_number = None
+        self.position_list = [self.position_type, self.position_number]
+    
+    def type_chnage(self, position_type):
+        # 引数としてタイプを受け取る
+        # 返り値はなし
+        # 出来ればここで勝手にポジションが変わるようにしたい
+        self.position_type = position_type
+    
+    def position_list_change(self, position_list):
+        """
+        # 引数としてposition_listを受け取る
+        # 返り値はなし
+        # 出来ればここで勝手にポジションが変わるようにしたい
+        """
+        self.position_type = position_list[0]
+        self.position_number = position_list[1]
+        self.position_list = position_list

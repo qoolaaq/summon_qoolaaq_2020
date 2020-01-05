@@ -38,17 +38,34 @@ def game_initialize(ALL_UNIT_LIST, FIELD, \
         ユニットをベンチに入れる
         引数はユニットとベンチにする
         """
-        bench.append(unit)
+        bench.unit_register(unit)
 
+    def unit_position_list_change_to_bench(unit, bench):
+        """
+        ユニットのposition_listを変える
+        ["bench", number]
+        """
+        position_list = bench.position_list_get(unit)
+        unit.position_list_change(position_list)
+        
     def unit_register_to_ALL_UNIT_LIST(unit, ALL_UNIT_LIST):
         """
-        ユニットをベンチに入れる
+        ALL_UNIT_LISTにユニットオブジェクトを入れる
         引数はユニットとALL_UNIT_LISTにする
         """
         ALL_UNIT_LIST.append(unit)
 
     for unit_name in STARTING_MEMBER_LIST:
         unit = unit_generate(unit_name, "FRIEND")
+        # 新規にユニットを作る
         unit_register_to_bench(unit, ALL_BENCH_LIST[0])
+        # ユニットをベンチに格納していく
+        unit_position_list_change_to_bench(unit, ALL_BENCH_LIST[0])
+        # ユニットのタイプをベンチにする
         unit_register_to_ALL_UNIT_LIST(unit, ALL_UNIT_LIST)
-        # ここは後で変える
+        # ここはとりあえずざっと書いただけ
+        # 後で変える
+
+        # for unit in ALL_BENCH_LIST[0]:
+        #     print(unit.name)
+        #     print(unit.position_list)

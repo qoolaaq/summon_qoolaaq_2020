@@ -53,29 +53,42 @@ class OtherPanel:
     """
     Bench、Outsideの描画のために作る
     panel.unitにunitを代入する
+    最初から描画しておく
+    情報の更新等はOtherPanelsで書くかも
     """
     color_none = (255, 255, 255)
     # いないのはwhite
-    # ユニットがいないことを想定してないので、要らないかも
     color_exist = (0, 0, 0)
     # いるのはblack
 
-    def __init__(self, unit, position, number: int, size: int):
+    def __init__(self, position, number: int, size: int):
         self.position = position
         self.number = number
         self.size = size
         self.flag = False
-        self.color = OtherPanel.color_exist
-        # ユニットがいるときにしか描写しないから、noneは要らないかも
-        self.unit = unit
-        # ユニットがいるときにしか描写しないから、予め入れておく
-
+        self.color = OtherPanel.color_none
+        self.unit = None
+        # 最初は何もいないので、色はnone、unitもNoneにしておく
     def get_unit(self, unit):
         """
         unitをself.unitに入れる
         __init__で代入したあと、毎回作っては消すから要らないかも
         """
         self.unit = unit
+        self.reset_flag_and_color_from_unit()
+    def reset_unit(self):
+        """
+        self.unitをnoneにする
+        """
+        self.unit = None
+        self.reset_flag_and_color_from_unit()
+    def reset_flag_and_color_from_unit(self):
+        if self.unit == None:
+            self.flag = False
+            self.color = OtherPanel.color_none
+        else:
+            self.flag = True
+            self.color = OtherPanel.color_exist
 
 class OtherPanels(list):
     """
@@ -83,17 +96,49 @@ class OtherPanels(list):
     listを継承する
     描画する際のpanel_sizeを引数として予め持っておく
     """
-    start_panel_position = (350, 30)
+    # start_panel_position = (350, 30)
     # とりあえずハードコーディングしている
     # ここは改めて変える必要がある(20/01/05)
 
-    def __init__(self, size):
+    def __init__(self, draw_list, start_panel_position, size: int):
+        """
+        描画する対象をdraw_listで受け取り、self.listに入れる
+        実際に描画するパネルのサイズをsizeで受け取り、self.sizeに入れる
+        self.initializeのために、start_panel_positionも受け取る
+        """
+        self.list = draw_list
         self.panel_size = size
-    def self_reset(self):
+        self.start_panel_position = start_panel_position
+        self.initilize(start_panel_position, size)
+    def initilize(self, start_panel_position, size):
         """
-        自身のリストの中の要素をすべて削除する
+        start_panel_position = taple(x, y)
+        ゲーム開始時に使うメソッド
+        __init__()の方にも書いておく
         """
-        self.clear()
+        for number in range(7):
+            # とりあえず現状の手札=7だけ描画する
+            panel_position = [start_panel_position[0] + (size + 10) * number, start_panel_position[1]]
+            # 隣との間を10だけあける
+            panel = OtherPanel(panel_position, number, size)
+            self.append(panel)
+    def reload_panel_unit(self):
+        """
+        各panelにユニット情報を更新させる
+        unitはself.listから拾ってくる
+        """
+        self.reset_panel_unit()
+        for number in range(len(self.list)):
+            # 描画対象のユニットがいる分だけfor文を回す
+            unit = self.list[number]
+            panel = self[number]
+            panel.get_unit(unit)
+    def reset_panel_unit(self):
+        """
+        各panelのユニット情報を消す
+        """
+        for panel in self:
+            panel.reset_unit()
     def panel_make_from_list(self, list):
         """
         listを読み込んで、その分だけpanelを作成

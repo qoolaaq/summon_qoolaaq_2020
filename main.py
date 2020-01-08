@@ -63,46 +63,6 @@ FRIEND_OUTSIDE = Outside("friend")
 ALL_OUTSIDE_LIST = [FRIEND_OUTSIDE]
 
 """
-GameLogicの描画で使うオブジェクトをここで宣言しておく
-"""
-FIELD_PANEL_SIZE = 50
-FIELD_PANELS = \
-    [[FieldPanel([30 + i * (FIELD_PANEL_SIZE + 10), 30 + j * (FIELD_PANEL_SIZE + 10)],\
-         FIELD_PANEL_SIZE)\
-         for i in range(5)] for j in range(5)]
-# フィールドを表示するパネルを生成する
-# [30, 30]はパネルの開始地点
-# パネル間を10としている
-
-BENCH_PANEL_SIZE = 30
-OUTSID_PANEL_SIZE = 30
-FRIEND_BENCH_PANELS = OtherPanels(BENCH_PANEL_SIZE)
-ENEMYS_BENCH_PANELS = OtherPanels(BENCH_PANEL_SIZE)
-FRIEND_OUTSIDE_PANELS = OtherPanels(OUTSID_PANEL_SIZE)
-ENEMY_OUTSIDE_PANELS = OtherPanels(OUTSID_PANEL_SIZE)
-ALL_OTHER_PANELS = [
-    FRIEND_BENCH_PANELS,
-    ENEMYS_BENCH_PANELS,
-    FRIEND_OUTSIDE_PANELS,
-    ENEMY_OUTSIDE_PANELS
-]
-# ベンチもアウトサイドも描画にはパネルを使うことにした
-
-
-"""
-PANELとGameLogicを紐付けていく
-"""
-
-"""
-FIELD_PANELSとFIELDを紐付ける
-具体的には、panel.squareとして情報を持っておく
-"""
-for i in range(5):
-    for j in range(5):
-        # FIELD_PANELS[j][i].get_square(FIELD.list[j][i])
-        FIELD_PANELS[j][i].get_square(FIELD[j][i])
-
-"""
 ゲームロジックを初期化する
 """
 FRIEND_STARTING_MEMBER_LIST = \
@@ -116,6 +76,61 @@ print("game is started")
 for unit in ALL_UNIT_LIST:
     print(unit.name)
     print(unit.position_list)
+
+
+
+"""
+GameLogicの描画で使うオブジェクトをここで宣言しておく
+"""
+FIELD_PANEL_SIZE = 50
+FIELD_PANELS = \
+    [[FieldPanel([30 + i * (FIELD_PANEL_SIZE + 10), 30 + j * (FIELD_PANEL_SIZE + 10)],\
+         FIELD_PANEL_SIZE)\
+         for i in range(5)] for j in range(5)]
+# フィールドを表示するパネルを生成する
+# [30, 30]はパネルの開始地点
+# パネル間を10としている
+
+BENCH_PANEL_SIZE = 30
+OUTSIDE_PANEL_SIZE = 30
+FRIEND_BENCH_PANELS = OtherPanels(
+    FRIEND_BENCH, [350, 30], BENCH_PANEL_SIZE
+    )
+ALL_OTHER_PANEL = [FRIEND_BENCH_PANELS]
+# とりあえずFRIENDのみ
+
+
+# ALL_OTHER_PANELS = [
+#     FRIEND_BENCH_PANELS,
+#     ENEMYS_BENCH_PANELS,
+#     FRIEND_OUTSIDE_PANELS,
+#     ENEMY_OUTSIDE_PANELS
+# ]
+# ベンチもアウトサイドも描画にはパネルを使うことにした
+
+# for test
+# for panel in FRIEND_BENCH_PANELS:
+#     print(panel.unit)
+
+
+# """
+# PANELとGameLogicを紐付けていく
+# """
+
+"""
+FIELD_PANELSとFIELDを紐付ける
+具体的には、panel.squareとして情報を持っておく
+"""
+for i in range(5):
+    for j in range(5):
+        # FIELD_PANELS[j][i].get_square(FIELD.list[j][i])
+        FIELD_PANELS[j][i].get_square(FIELD[j][i])
+
+"""
+OTHER_PANELSとBENCHやOUTSIDEを紐付ける
+"""
+FRIEND_BENCH_PANELS.reload_panel_unit()
+
 
 """
 以下、メインルーティン
@@ -137,9 +152,20 @@ def main():
         """
         for row in FIELD_PANELS:
             for panel in row:
-                pygame.draw.rect(SURFACE, panel.color, \
-                    (panel.position[0], panel.position[1], panel.size, panel.size))
+                pygame.draw.rect(
+                    SURFACE, panel.color, 
+                    (panel.position[0], panel.position[1], 
+                    panel.size, panel.size)
+                    )
                 # panel.position -> [xpos, ypos]
+        
+        for panel in FRIEND_BENCH_PANELS:
+            pygame.draw.rect(
+                SURFACE, panel.color, 
+                (panel.position[0], panel.position[1], 
+                panel.size, panel.size)
+                )
+
 
         for event in pygame.event.get():
             # print(event) ### for test
@@ -160,6 +186,13 @@ def main():
                             mouse_position = panel.square.coordinate
                             if panel.square.unit_exist:
                                 print(panel.square.unit.name)
+                # とりあえずFRIEND_BENCH_PANELだけマウスオーバーを実装
+                # 似たような記述なので、統合したい(2020/01/08)
+                for panel in FRIEND_BENCH_PANELS:
+                    if (panel.position[0] < event.pos[0] < panel.position[0] + panel.size)  \
+                            and (panel.position[1] < event.pos[1] < panel.position[1] + panel.size):
+                            if panel.flag == True:
+                                print(panel.unit.name)
             elif event.type == MOUSEBUTTONDOWN:
                 # mousepos.append(event.pos)
                 # マウスの座標＝event.posでタプルとして取得
@@ -192,10 +225,9 @@ def main():
                             """
                             描画を更新する
                             """
-                            # for row in FIELD_PANELS:
-                            #     for field_panel in row:
-                            #         field_panel.flag_reset()
-
+                            FRIEND_BENCH_PANELS.reset_panel_unit()
+                            FRIEND_BENCH_PANELS.reload_panel_unit()
+                            
                             # FRIEND_BENCH_PANELS.panel_make_from_list(FRIEND_BENCH)
                             # # ターンが終わり次第、各OTHER_PANELSの中身をリセットする
                             # # とりあえずFRIEND_BENCH_PANELSのみ処理する

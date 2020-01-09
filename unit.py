@@ -8,11 +8,34 @@
 # スキルをユニットごとに定義するの大変だけど仕方ない
 # 要改良
 def skill_of_Alice():
-    print("hello, I'm Alice")
+    pass
 def skill_of_Becky():
-    print("hello, I'm Becky")
-def skill_of_Cashy():
-    print("hello, I'm Cashy")
+    pass
+def skill_of_Cathy():
+    pass
+def skill_of_Daisy():
+    pass
+def skill_of_Emilia():
+    pass
+def skill_of_Flora():
+    pass
+def skill_of_Grace():
+    pass
+
+def skill_of_Reina():
+    pass
+def skill_of_Selena():
+    pass
+def skill_of_Tina():
+    pass
+def skill_of_Vivian():
+    pass
+def skill_of_Willow():
+    pass
+def skill_of_Yvonne():
+    pass
+def skill_of_Zara():
+    pass
 
 # ユニットの名前、カラーの辞書型データ
 # 名前：［名前、カラー, スキル］
@@ -20,7 +43,11 @@ def skill_of_Cashy():
 unit_dictionary = {
     "Alice" : ["Alice", "Red", skill_of_Alice],
     "Becky" : ["Becky", "Red", skill_of_Becky],
-    "Cashy" : ["Cashy", "Red", skill_of_Cashy]
+    "Cathy" : ["Cathy", "Red", skill_of_Cathy],
+    "Daisy" : ["Daisy", "Red", skill_of_Daisy],
+    "Emilia" : ["Emilia", "Red", skill_of_Emilia],
+    "Flora" : ["Flora", "Red", skill_of_Flora],
+    "Grace" : ["Grace", "Red", skill_of_Grace]
 }
 
 # 名前を引数として受け取って、UnitDictionaryからリストとして情報を引っ張ってくる

@@ -19,7 +19,26 @@ from action import *
 今はとりあえず書いてる
 """
 def friend_starting_menber_list_get():
-    return ["Alice", "Becky", "Cashy"]
+    return [
+        "Alice", 
+        "Becky", 
+        "Cathy",
+        "Daisy",
+        "Emilia",
+        "Flora",
+        "Grace"
+        ]
+def enemy_starting_menber_list_get():
+    return [
+        "Reina",
+        "Selena",
+        "Tina",
+        "Vivian",
+        "Willow",
+        "Yvonne",
+        "Zara"
+    ]
+
 
 def game_initialize(
     ALL_UNIT_LIST, FIELD, ALL_AREA_LIST,

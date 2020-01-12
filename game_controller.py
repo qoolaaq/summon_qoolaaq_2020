@@ -93,30 +93,35 @@ class GameController:
         if clickable_check():
             # ユニットがいないsquareのみに置ける
 
-            #####
-            # FRIEND_BENCH >= ENEMY_BENCHならば、FRIEND＿BENCHからユニットを出す
-            # そうでなければ、ENEMY_BENCHからユニットを出す
-            #####
-            if len(ALL_BENCH_LIST[0]) >= len(ALL_BENCH_LIST[1]):
-                unit = clicked_unit_call_from_bench(ALL_BENCH_LIST[0])
-            else:
-                unit = clicked_unit_call_from_bench(ALL_BENCH_LIST[1])
-            # ベンチの先頭のユニットをunitに代入
+            if not len(ALL_BENCH_LIST[1]) == 0:
+            # ベンチにユニットがいるときのみ置くようにした
 
-            clicked_unit_place_to_square(unit)
-            # squareにユニットを置く
+                #####
+                # FRIEND_BENCH >= ENEMY_BENCHならば、FRIEND＿BENCHからユニットを出す
+                # そうでなければ、ENEMY_BENCHからユニットを出す
+                #####
+                if len(ALL_BENCH_LIST[0]) >= len(ALL_BENCH_LIST[1]):
+                    unit = clicked_unit_call_from_bench(ALL_BENCH_LIST[0])
+                else:
+                    unit = clicked_unit_call_from_bench(ALL_BENCH_LIST[1])
+                # ベンチの先頭のユニットをunitに代入
 
-            unit_position_list_change(unit)
-            # unitのposition_listを更新
+                clicked_unit_place_to_square(unit)
+                # squareにユニットを置く
 
-            reset_all_area_information()
-            # areaの情報を更新(area.reset_area_dictionary)
+                unit_position_list_change(unit)
+                # unitのposition_listを更新
 
-            for unit in ALL_UNIT_LIST:
-                print("#####")
-                print("my name is", unit.name)
-                print("my team is", unit.team)
-                print("i am in", unit.position_list)
-                print("#####")
-            # for test
-            # ALL_UNIT_LIST内のユニットの名前とposition_listを書き出す
+                """
+                # for test
+                """
+                for unit in ALL_UNIT_LIST:
+                    print("#####")
+                    print("my name is", unit.name)
+                    print("my team is", unit.team)
+                    print("i am in", unit.position_list)
+                    print("#####")
+
+
+                reset_all_area_information()
+                # areaの情報を更新(area.reset_area_dictionary)

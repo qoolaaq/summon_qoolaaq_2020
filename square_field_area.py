@@ -143,7 +143,7 @@ class Area(list):
         # 割と強引に作った
         # area_maker()の返り値が作りたいオブジェクトそのものなのだが、
         # self = Area.area_maker()と出来なかったので、一度バラして突っ込んだ。
-        # central_area.list[1][1].coordinate みたいな
+        # CENTRAL_AREA.list[1][1].coordinate みたいな
         self.dictionary = {
             "FRIEND" : 0,
             "ENEMY": 0
@@ -151,7 +151,13 @@ class Area(list):
         self.occupaied_team = None
         # とりあえずFRIENDとENEMYのみしかチームがないという想定で書いてしまっている
     def __area_make(self, FIELD, data_list):
-        return [[FIELD[data_list[1][0]+i][data_list[1][1]+j] for i in range(-1,2)] for j in range(-1,2)]
+        central_coordinate = data_list[1]
+        return [
+            [FIELD[central_coordinate[1]+i][central_coordinate[0]+j] 
+            for i in range(-1,2)] 
+            for j in range(-1,2)
+            ]
+        # [ypos][xpos] = [ypos, ypos]
         # 割と強引に作った
     def __area_information_list_get(keys):
         data_list = area_dictionary[keys]
@@ -201,9 +207,9 @@ class Area(list):
 
 # {name:[name, coordinate], ... }でデータを持つ
 area_dictionary = {
-    "central_area":["central_area", [2,2]],
-    "right_upper_area":["right_upper_area", [3,1]],
-    "left_upper_area":["left_upper_area", [1,1]],
-    "left_lower_area":["left_lower_area", [1,3]],
-    "right_lower_area":["right_lower_area", [3,3]]
+    "CENTRAL_AREA":["CENTRAL_AREA", [2,2]],
+    "RIGHT_UPPER_AREA":["RIGHT_UPPER_AREA", [3,1]],
+    "LEFT_UPPER_AREA":["LEFT_UPPER_AREA", [1,1]],
+    "LEFT_LOWER_AREA":["LEFT_LOWER_AREA", [1,3]],
+    "RIGHT_LOWER_AREA":["RIGHT_LOWER_AREA", [3,3]]
 }

@@ -1,76 +1,23 @@
 # coding: utf-8
-
-# ユニットすべてをリストとして管理する
-# グローバル変数としてmainで宣言することにした
-# ALL_UNIT_LIST = []
-
-# ユニットごとにスキルを関数として定義しておく
-# スキルをユニットごとに定義するの大変だけど仕方ない
-# 要改良
-def skill_of_Alice():
-    pass
-def skill_of_Becky():
-    pass
-def skill_of_Cathy():
-    pass
-def skill_of_Daisy():
-    pass
-def skill_of_Emilia():
-    pass
-def skill_of_Flora():
-    pass
-def skill_of_Grace():
-    pass
-
-def skill_of_Reina():
-    pass
-def skill_of_Selena():
-    pass
-def skill_of_Tina():
-    pass
-def skill_of_Vivian():
-    pass
-def skill_of_Willow():
-    pass
-def skill_of_Yvonne():
-    pass
-def skill_of_Zara():
-    pass
-
-# ユニットの名前、カラーの辞書型データ
-# 名前：［名前、カラー, スキル］
-# パワーは実装しないことにした
-unit_dictionary = {
-    "Alice" : ["Alice", "Red", skill_of_Alice],
-    "Becky" : ["Becky", "Red", skill_of_Becky],
-    "Cathy" : ["Cathy", "Red", skill_of_Cathy],
-    "Daisy" : ["Daisy", "Red", skill_of_Daisy],
-    "Emilia" : ["Emilia", "Red", skill_of_Emilia],
-    "Flora" : ["Flora", "Red", skill_of_Flora],
-    "Grace" : ["Grace", "Red", skill_of_Grace]
-}
-
-# 名前を引数として受け取って、UnitDictionaryからリストとして情報を引っ張ってくる
-# name → datalist = [name, color, skill]
-def unit_information_get(keys):
-    data_list = unit_dictionary[keys]
-    return data_list
+from unit_dictionary import *
 
 # 引数として名前とチームを受け取って、ユニットオブジェクトを作成する
 class Unit():
+    """
     # datalist: UnitInformationGetterで引っ張ってくるリスト
-    # team: 文字列、敵か味方か
+    # team: 文字列、敵か味方か(FRIENDかENEMYか)
     # position_list: [position_type, position_number]
     # position_type: "square", "bench", "outside"
     # "field"よりもsquareにした方が良さそうだったので変えた(20/01/05)
     # position_number: int(0~24)
     # position_typeとnumberは紐付いてないと意味ないので、リストで持つ
+    """
     def __init__(self, unit_name: str, team):
         # UnitInformationGetterでnameから情報を引っ張ってきてプロパティを定義する。
         # datalist = [name, color, skill]
-        self.name = unit_information_get(unit_name)[0]
-        self.color = unit_information_get(unit_name)[1]
-        self.skill = unit_information_get(unit_name)[2]
+        self.name = UnitDictionary.get_unit_information(unit_name)[0]
+        self.color = UnitDictionary.get_unit_information(unit_name)[1]
+        self.skill = UnitDictionary.get_unit_information(unit_name)[2]
 
         # teamをプロパティとして紐付ける
         self.team = team

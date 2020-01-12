@@ -37,5 +37,7 @@ def dictionary_make(name, color):
 # for name in enemy_starting_menber_list_get():
 #     skill_make(name)
 
-for name in friend_starting_menber_list_get():
+
+
+for name in enemy_starting_menber_list_get():
     dictionary_make(name, "Red")

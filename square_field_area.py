@@ -119,10 +119,19 @@ class Field(list):
         return [[Square([i,j]) for i in range(5)] for j in range(5)]
 
 class Area(list):
-    # 引数はFIELDオブジェクト、data_list
-    # data_list[name, coordinate]
+    """
+    # 各エリアは3✕3の9マスとなっている
+    # すべてのエリアにおいて、各ユニットが何体いるのかを把握しておく
+    """
     global Field
     def __init__(self, FIELD, area_name):
+        """
+        # 引数はFIELDオブジェクト、data_list = [name, coordinate]
+        # self.name: 名前
+        # self.central_coordinate: 中心の座標[xpos, ypos]
+        # self.dictionary = {team_name : number_of_unit}
+        # self.occupaied_team = "FRIEND" or "ENEMY" (最初はNone)
+        """
         data_list = Area.__area_information_list_get(area_name)
         # data_list = [名前, 中央のsquareの座標]
         self.name = data_list[0]
@@ -135,12 +144,60 @@ class Area(list):
         # area_maker()の返り値が作りたいオブジェクトそのものなのだが、
         # self = Area.area_maker()と出来なかったので、一度バラして突っ込んだ。
         # central_area.list[1][1].coordinate みたいな
+        self.dictionary = {
+            "FRIEND" : 0,
+            "ENEMY": 0
+            }
+        self.occupaied_team = None
+        # とりあえずFRIENDとENEMYのみしかチームがないという想定で書いてしまっている
     def __area_make(self, FIELD, data_list):
         return [[FIELD[data_list[1][0]+i][data_list[1][1]+j] for i in range(-1,2)] for j in range(-1,2)]
         # 割と強引に作った
     def __area_information_list_get(keys):
         data_list = area_dictionary[keys]
         return data_list
+    def reset_area_dictionary(self):
+        """
+        # 各エリアにどのチームのユニットが何体いるのかをself.dictionaryに記録する
+        # とりあえずFRIENDとENEMYのみで書いてしまう
+        # 返り値はなし
+        """
+        number_of_friend_unit = 0
+        number_of_enemy_unit = 0
+        for row in self:
+            for square in row:
+                if square.unit_exist == True:
+                    if square.unit.team == "FRIEND":
+                        number_of_friend_unit = number_of_friend_unit + 1
+                    elif square.unit.team == "ENEMY":
+                        number_of_enemy_unit = number_of_enemy_unit + 1
+        self.dictionary["FRIEND"] = number_of_friend_unit
+        self.dictionary["ENEMY"] = number_of_enemy_unit
+        # print("i am {} and".format(self.name),"reset is called")
+        # for test
+    def reset_area_occupaied_team(self):
+        """
+        # self.dictionaryからどちらのユニットが多いのか判定し、
+        # self.occupaied_teamを更新する
+        # f>e -> f
+        # f<e -> e
+        # f=e -> None
+        """
+        number_of_friend_unit = self.dictionary.get("FRIEND")
+        number_of_enemy_unit = self.dictionary.get("ENEMY")
+        if number_of_friend_unit > number_of_enemy_unit:
+            self.occupaied_team = "FRIEND"
+        elif number_of_friend_unit < number_of_enemy_unit:
+            self.occupaied_team = "ENEMY"
+        else:
+            self.occupaied_team = None
+    def reset_area_information(self):
+        """
+        area.dictionaryとarea.occupaied_teamを更新する
+        """
+        self.reset_area_dictionary()
+        self.reset_area_occupaied_team()
+
 
 # {name:[name, coordinate], ... }でデータを持つ
 area_dictionary = {
@@ -150,20 +207,3 @@ area_dictionary = {
     "left_lower_area":["left_lower_area", [1,3]],
     "right_lower_area":["right_lower_area", [3,3]]
 }
-
-
-"""
-# mainに移した
-
-FIELD = Field()
-
-# 各エリアを作成する
-CENTRAL_AREA = Area(FIELD, "central_area")
-RIGHT_UPPER_AREA = Area(FIELD, "right_upper_area")
-LEFT_UPPER_AREA = Area(FIELD, "left_upper_area")
-LEFT_LOWER_AREA = Area(FIELD, "left_lower_area")
-RIGHT_LOWER_AREA = Area(FIELD, "right_lower_area")
-# 全てのエリアを統括するリストを作成する
-ALL_AREA_LIST = [CENTRAL_AREA, RIGHT_UPPER_AREA, LEFT_LOWER_AREA, \
-    RIGHT_UPPER_AREA]
-"""

@@ -8,65 +8,75 @@ import game_initilizer
 
 class FieldPanel:
     """
-    Fieldの描画のために作る
-    Fieldpanel.squareにsquareを代入する
+    # Fieldの描画のために作る
+    # Fieldpanel.squareにsquareを代入する
+        # self.position = position
+        # self.size = size
+        # self.flag = False
+        # self.color = FieldPanel.color_None
+        # self.square = None
     """
-    color_none = (255, 255, 255)
+    color_FRIEND = (255, 255, 255)
     # いないのはwhite
-    color_exist = (0, 0, 0)
+    color_ENEMY = (0, 0, 0)
     # いるのはblack
+    color_None = (160, 160, 160)
+    # 初期値は背景色にしておく
 
     def __init__(self, position: list, size: int):
         self.position = position
         self.size = size
         self.flag = False
-        self.color = FieldPanel.color_none
+        self.color = FieldPanel.color_None
         self.square = None
         # 継承して、FieldFieldPanelに実装させる
         # やっぱりやめた
 
-    def make_flag_change(self):
-        """
-        flagを反転させて、colorプロパティを変える
-        """
-        self.flag = not self.flag
-        if self.flag == True:
-            self.color = FieldPanel.color_exist
-        else:
-            self.color = FieldPanel.color_none
-
     def get_square(self, square):
         self.square = square
 
-    def flag_reset(self):
+    def reset_flag(self):
         """
         unit.existがTrueなら、flagをTrueにして描画させる
         """
         self.flag = self.square.unit_exist
         # print("flag.reset is called")
         if self.flag == True:
-            self.color = FieldPanel.color_exist
+            # ユニットのチームに応じて、色を変える
+            if self.square.unit.team == "FRIEND":
+                self.color = FieldPanel.color_FRIEND
+            elif self.square.unit.team == "ENEMY":
+                self.color = FieldPanel.color_ENEMY
         else:
-            self.color = FieldPanel.color_none
+            # いなければ、背景色と同じにする
+            self.color = FieldPanel.color_None
 
 class OtherPanel:
     """
-    Bench、Outsideの描画のために作る
-    panel.unitにunitを代入する
-    最初から描画しておく
-    情報の更新等はOtherPanelsで書くかも
+    # Bench、Outsideの描画のために作る
+    # panel.unitにunitを代入する
+    # 最初から描画しておく
+    # 情報の更新等はOtherPanelsで書くかも
+        self.position = position
+        self.number = number
+        self.size = size
+        self.flag = False
+        self.color = OtherPanel.color_FRIEND
+        self.unit = None
     """
-    color_none = (255, 255, 255)
+    color_FRIEND = (255, 255, 255)
     # いないのはwhite
-    color_exist = (0, 0, 0)
+    color_ENEMY = (0, 0, 0)
     # いるのはblack
+    color_None = (160, 160, 160)
+    # 初期値は背景色にしておく
 
     def __init__(self, position, number: int, size: int):
         self.position = position
         self.number = number
         self.size = size
         self.flag = False
-        self.color = OtherPanel.color_none
+        self.color = OtherPanel.color_None
         self.unit = None
         # 最初は何もいないので、色はnone、unitもNoneにしておく
     def get_unit(self, unit):
@@ -84,11 +94,16 @@ class OtherPanel:
         self.reset_flag_and_color_from_unit()
     def reset_flag_and_color_from_unit(self):
         if self.unit == None:
+            # ユニットがいなければ、背景色にする
             self.flag = False
-            self.color = OtherPanel.color_none
+            self.color = OtherPanel.color_None
         else:
             self.flag = True
-            self.color = OtherPanel.color_exist
+            # ユニットがいるならば、チームに応じて、色を変える
+            if self.unit.team == "FRIEND":
+                self.color = OtherPanel.color_FRIEND
+            elif self.unit.team == "ENEMY":
+                self.color = OtherPanel.color_ENEMY
 
 class OtherPanels(list):
     """
@@ -119,6 +134,7 @@ class OtherPanels(list):
         for number in range(7):
             # とりあえず現状の手札=7だけ描画する
             panel_position = [start_panel_position[0] + (size + 10) * number, start_panel_position[1]]
+            # 横に7つ並べている
             # 隣との間を10だけあける
             panel = OtherPanel(panel_position, number, size)
             self.append(panel)

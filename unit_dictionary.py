@@ -1,3 +1,5 @@
+from skill import *
+
 def skill_of_Alice():
     pass
 def skill_of_Becky():
@@ -41,7 +43,7 @@ class UnitDictionary:
         "Emilia" : ["Emilia", "Red", skill_of_Emilia],
         "Flora" : ["Flora", "Red", skill_of_Flora],
         "Grace" : ["Grace", "Red", skill_of_Grace],
-        
+
         "Reina" : ["Reina", "Red", skill_of_Reina],
         "Selena" : ["Selena", "Red", skill_of_Selena],
         "Tina" : ["Tina", "Red", skill_of_Tina],

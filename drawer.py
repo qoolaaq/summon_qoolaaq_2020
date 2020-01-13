@@ -110,7 +110,7 @@ class Drawer:
         """
         # mouse_coordinateは、イベントリストから拾ってくるマウスの座標
         # FIELD上の座標ではない。
-        # 現在のフィールド上でのユニット名をprintする
+        # 返り値は現在のフィールド上でのユニットオブジェクト
         # draw_for_mouse_over_on_panelsで使う
         """
         for row in FIELD_PANELS:
@@ -126,8 +126,9 @@ class Drawer:
                     # print(mouse_coordinate)
                     # # for test
                     if panel.square.unit_exist:
-                        print(panel.square.unit.name)
-
+                        # print(panel.square.unit.name)
+                        # # for test
+                        return panel.square.unit
     def draw_for_mouse_over_on_other_panels(
         SURFACE,
         FIELD_PANELS,
@@ -137,7 +138,7 @@ class Drawer:
     ):
         """
         # mouse_coordinateは、イベントリストから拾ってくるマウスの座標
-        # 現在のother_panels上でのユニット名をprintする
+        # 返り値は現在のother_panels上でのユニット
         # draw_for_mouse_over_on_panelsで使う
         """
         for panels in ALL_OTHER_PANELS_LIST:
@@ -145,7 +146,9 @@ class Drawer:
                 if (panel.position[0] < mouse_coordinate[0] < panel.position[0] + panel.size)  \
                         and (panel.position[1] < mouse_coordinate[1] < panel.position[1] + panel.size):
                         if panel.flag == True:
-                            print(panel.unit.name)
+                            # print(panel.unit.name)
+                            # # for test
+                            return panel.unit
 
     def draw_for_mouse_over_on_panels(
         SURFACE,
@@ -157,22 +160,35 @@ class Drawer:
         """
         # mouse_coordinateは、イベントリストから拾ってくるマウスの座標
         # FIELD上の座標ではない。
-        # 現在のマウスの位置のpanel上のユニット名をprintする
+        # 返り値は現在のマウスの位置のpanel上のユニットオブジェクト
         """
-        Drawer.draw_for_mouse_over_on_field_panels(
+
+        panel_unit = None
+
+        field_panel_unit = Drawer.draw_for_mouse_over_on_field_panels(
             SURFACE,
             FIELD_PANELS,
             ALL_OTHER_PANELS_LIST,
             ALL_AREA_FRAME_LIST,
             mouse_coordinate
         )
-        Drawer.draw_for_mouse_over_on_other_panels(
+
+        other_panel_unit = Drawer.draw_for_mouse_over_on_other_panels(
             SURFACE,
             FIELD_PANELS,
             ALL_OTHER_PANELS_LIST,
             ALL_AREA_FRAME_LIST,
             mouse_coordinate
         )
+
+        if not field_panel_unit == None:
+            panel_unit = field_panel_unit
+        elif not other_panel_unit == None:
+            panel_unit = other_panel_unit
+        # Noneでないならば、panel_unitに各種返り値を入れる
+        if not panel_unit == None:
+            return panel_unit
+            # Noneでないならば、panel_unitを返り値として返す
 
     def update_field_panels(FIELD_PANELS):
         """
@@ -211,3 +227,23 @@ class Drawer:
         Drawer.update_field_panels(FIELD_PANELS)
         Drawer.update_other_panels(ALL_OTHER_PANELS_LIST)
         Drawer.update_area_frames(ALL_AREA_FRAME_LIST)
+    def get_score(ALL_AREA_FRAME_LIST):
+        """
+        FOR TEST
+        ALL_AREA_FRAME_LISTから情報を引っ張ってきて
+        スコアを描画する
+        返り値はstr
+            FRIEND N : ENEMY M
+        """
+        score_FRIEND = 0
+        score_ENEMY = 0
+        for area_frame in ALL_AREA_FRAME_LIST:
+            if area_frame.area.occupaied_team == "FRIEND":
+                score_FRIEND += 1
+            elif area_frame.area.occupaied_team == "ENEMY":
+                score_ENEMY += 1
+        letters_score = \
+            "FRIEND {} : ENEMY {}".format(
+                str(score_FRIEND), str(score_ENEMY)
+                )
+        return letters_score

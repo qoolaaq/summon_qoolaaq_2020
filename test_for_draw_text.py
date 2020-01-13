@@ -5,7 +5,7 @@
 
 import sys
 import pygame
-from pygame.locals import QUIT, MOUSEBUTTONDOWN,MOUSEBUTTONUP
+from pygame.locals import QUIT, MOUSEBUTTONDOWN,MOUSEBUTTONUP, MOUSEMOTION
 
 pygame.init()
 SURFACE = pygame.display.set_mode((400,200))
@@ -43,6 +43,23 @@ def main():
                     (0, 128, 128)
                     )
                 message_rect.center = event.pos
+            elif event.type == MOUSEMOTION:
+                if event.pos[0] >= 200:    
+                    lettters = "moving"
+                    message = sysfont.render(
+                        lettters,
+                        True,
+                        (0, 128, 128)
+                        )
+                    message_rect.center = event.pos
+                else:
+                    lettters = ""
+                    message = sysfont.render(
+                        lettters,
+                        True,
+                        (0, 128, 128)
+                        )
+                    message_rect.center = event.pos                                    
             else:
                 lettters = ""
                 message = sysfont.render(

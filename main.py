@@ -185,7 +185,23 @@ def main():
     メインルーティン
     """
 
-    sysfont = pygame.font.SysFont(None, 50)
+    """
+    UnitInformationPanelの描画のために宣言しておく
+    """
+    sysfont = pygame.font.SysFont(None, 35)
+    letters = ""
+    message = sysfont.render(
+        letters,
+        True,
+        (80, 80, 80)
+    )
+
+    message_rect = message.get_rect()
+    message_rect.center = (370, 235)
+
+    unit_information_panel_rect_list = \
+        UnitInformationPanel.get_unit_information_panel_rect_list()
+    unit_information_panel_rect_color = (160, 160, 160)
 
     while True:
         """
@@ -197,6 +213,16 @@ def main():
             ALL_OTHER_PANELS_LIST,
             ALL_AREA_FRAME_LIST
             )
+        """
+        UnitInformationPanelの描画
+        """
+
+        # とりあえず背景色と一緒にしている
+        pygame.draw.rect(
+            SURFACE,
+            unit_information_panel_rect_color,
+            unit_information_panel_rect_list
+        )
 
         for event in pygame.event.get():
             # print(event) ### for test
@@ -209,17 +235,54 @@ def main():
             #####
             elif event.type == MOUSEMOTION:
                 mouse_coordinate = event.pos
-                print(mouse_coordinate)
                 """
-                # 現在のpanel上でのユニット名をprintする
+                # 現在のpanel上でのユニット名を描画する
                 """
-                Drawer.draw_for_mouse_over_on_panels(
+                mouse_overed_unit = None
+                mouse_overed_unit = Drawer.draw_for_mouse_over_on_panels(
                     SURFACE,
                     FIELD_PANELS,
                     ALL_OTHER_PANELS_LIST,
                     ALL_AREA_FRAME_LIST,
                     mouse_coordinate
                 )
+                # mouse_overed_unit: 現在のpanel上でのユニット
+
+                if not mouse_overed_unit == None:
+                    """
+                    UnitInformationPanelの文字の情報を取得、更新
+                    """
+                    letters = \
+                        UnitInformationPanel.get_unit_information_letters(
+                            mouse_overed_unit
+                        )
+                    letters_color = \
+                        UnitInformationPanel.get_unit_information_panel_letter_color(
+                            mouse_overed_unit
+                        )
+
+                    message = sysfont.render(
+                        mouse_overed_unit.name,
+                        True,
+                        letters_color
+                        )
+                    message_rect.center = (370, 240)
+
+                else:
+                    ##########
+                    # for test
+                    # scoreを描画する
+                    # ALL_AREA_LISTから直接情報を持ってきてるのであまり良くない気がする
+                    ##########
+                    letters_score = \
+                        Drawer.get_score(ALL_AREA_FRAME_LIST)
+                    message = sysfont.render(
+                        letters_score,
+                        True,
+                        (80, 80, 80)
+                        )
+                    message_rect.center = (370, 240)
+
             elif event.type == MOUSEBUTTONDOWN:
                 # マウスの座標＝event.posでタプルとして取得
                 for row in FIELD_PANELS:
@@ -258,14 +321,31 @@ def main():
                                 ALL_AREA_FRAME_LIST
                             )
                             # ターンが終わり次第、各PANELSとFRAMESをリセットする
+            else:
+                ##########
+                # for test
+                # scoreを描画する
+                # ALL_AREA_LISTから直接情報を持ってきてるのであまり良くない気がする
+                ##########
+                letters_score = \
+                    Drawer.get_score(ALL_AREA_FRAME_LIST)
+                message = sysfont.render(
+                    letters_score,
+                    True,
+                    (80, 80, 80)
+                    )
+                message_rect.center = (370, 240)
+
         """
         描画を更新する
         """
-
+        SURFACE.blit(message, message_rect)
         pygame.display.update()
         # プログラム内で描画した内容を反映させる
-        FPSCLOCK.tick(10)
+        FPSCLOCK.tick(100)
         # 1秒間に10回ループを回す
+
+        # print(unit_information_panel_rect_color)
 
 if __name__ == "__main__":
     main()

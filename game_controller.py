@@ -71,7 +71,7 @@ class GameController:
             unit_existがTrueならFalseを返す
             """
             return not clicked_square.unit_placable_get()
-        
+
         def reset_all_area_information():
             """
             すべてのエリアのarea.dictionaryを更新する

@@ -209,6 +209,7 @@ def main():
             #####
             elif event.type == MOUSEMOTION:
                 mouse_coordinate = event.pos
+                print(mouse_coordinate)
                 """
                 # 現在のpanel上でのユニット名をprintする
                 """

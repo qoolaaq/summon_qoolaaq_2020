@@ -1,34 +1,19 @@
-from skill import *
+from skill_list import *
 
-def skill_of_Alice():
-    pass
-def skill_of_Becky():
-    pass
-def skill_of_Cathy():
-    pass
-def skill_of_Daisy():
-    pass
-def skill_of_Emilia():
-    pass
-def skill_of_Flora():
-    pass
-def skill_of_Grace():
-    pass
-
-def skill_of_Reina():
-    pass
-def skill_of_Selena():
-    pass
-def skill_of_Tina():
-    pass
-def skill_of_Vivian():
-    pass
-def skill_of_Willow():
-    pass
-def skill_of_Yvonne():
-    pass
-def skill_of_Zara():
-    pass
+skill_of_Alice = SkillOfAlice()
+skill_of_Becky = SkillOfBecky()
+skill_of_Cathy = SkillOfCathy()
+skill_of_Daisy = SkillOfDaisy()
+skill_of_Emilia = SkillOfEmilia()
+skill_of_Flora = SkillOfFlora()
+skill_of_Grace = SkillOfGrace()
+skill_of_Reina = SkillOfReina()
+skill_of_Selena = SkillOfSelena()
+skill_of_Tina = SkillOfTina()
+skill_of_Vivian = SkillOfVivian()
+skill_of_Willow = SkillOfWillow()
+skill_of_Yvonne = SkillOfYvonne()
+skill_of_Zara = SkillOfZara()
 
 class UnitDictionary:
     """

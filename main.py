@@ -10,10 +10,10 @@ from action import *
 from bench import *
 from outside import *
 from action import *
-from input import *
 from drawer import *
 from game_controller import *
 from game_initilizer import *
+from skill_processor import *
 
 pygame.init()
 # pygameを使うアプリでは必ず最初に呼び出す必要がある
@@ -70,6 +70,7 @@ ALL_OUTSIDE_LIST = [
     FRIEND_OUTSIDE,
     ENEMY_OUTSIDE
     ]
+SKILL_PROCESSOR = SkillProcessor()
 
 """
 ゲームロジックを初期化する
@@ -309,6 +310,7 @@ def main():
                                 ALL_BENCH_LIST,
                                 ALL_OUTSIDE_LIST,
                                 FRIEND_STARTING_MEMBER_LIST,
+                                SKILL_PROCESSOR,
                                 click_position
                             )
 

@@ -11,6 +11,7 @@ class Unit():
     # "field"よりもsquareにした方が良さそうだったので変えた(20/01/05)
     # position_number: int(0~24)
     # position_typeとnumberは紐付いてないと意味ないので、リストで持つ
+    # targetable: bool, 効果の対象になるかどうかを決める
     """
     def __init__(self, unit_name: str, team):
         # UnitInformationGetterでnameから情報を引っ張ってきてプロパティを定義する。
@@ -26,7 +27,10 @@ class Unit():
         self.position_type = None
         self.position_number = None
         self.position_list = [self.position_type, self.position_number]
-    
+
+        # 効果の対象になるかどうか
+        self.targetable = True
+
     def type_chnage(self, position_type):
         # 引数としてタイプを受け取る
         # 返り値はなし
@@ -42,8 +46,19 @@ class Unit():
         self.position_type = position_list[0]
         self.position_number = position_list[1]
         self.position_list = position_list
+
     def position_number_return(self):
         """
         position_numberを返す
         """
         return self.position_number
+    def is_targetable(self):
+        """
+        targetablae を返す
+        """
+        return self.targetable
+    def chenge_targetable(self):
+        """
+        targetableをFalseにする
+        """
+        self.targetable = False

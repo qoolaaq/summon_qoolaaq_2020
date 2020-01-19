@@ -6,6 +6,7 @@ from action import *
 from bench import *
 from outside import *
 from action import *
+from skill import *
 
 class GameInitializer:
     """
@@ -99,6 +100,11 @@ class GameInitializer:
             # ここはとりあえずざっと書いただけ
             # 後で変える
 
+            # skillとunitを紐付ける
+            unit.skill.get_unit(unit)
+            # print("##########################for test")
+            # print(unit.skill.unit.name)
+
             # for unit in ALL_BENCH_LIST[0]:
             #     print(unit.name)
             #     print(unit.position_list)
@@ -113,6 +119,11 @@ class GameInitializer:
             unit_register_to_ALL_UNIT_LIST(unit, ALL_UNIT_LIST)
             # ここはとりあえずざっと書いただけ
             # 後で変える
+            
+            # skillとunitを紐付ける
+            unit.skill.get_unit(unit)
+            # print("##########################for test")
+            # print(unit.skill.unit.name)
 
             # for unit in ALL_BENCH_LIST[0]:
             #     print(unit.name)
@@ -122,9 +133,9 @@ class GameInitializer:
         print("#####")
         print("game is started")
         print("#####")
-        for unit in ALL_UNIT_LIST:
-            print("#####")
-            print("my name is", unit.name)
-            print("my team is", unit.team)
-            print("i am in", unit.position_list)
-            print("#####")
+        # for unit in ALL_UNIT_LIST:
+        #     print("#####")
+        #     print("my name is", unit.name)
+        #     print("my team is", unit.team)
+        #     print("i am in", unit.position_list)
+        #     print("#####")

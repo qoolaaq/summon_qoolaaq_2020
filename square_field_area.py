@@ -71,9 +71,11 @@ class Square():
         else:
             self.unit_exist = True
 
-    def unit_delete(self):
+    def delete_unit(self):
+        """
         # unitをNoneにする
         # unit_existはFalseにする
+        """
         self.unit_exist = False
         self.unit = None
 
@@ -89,13 +91,16 @@ class Square():
     def add_effect(self, effect):
         self.effect_list.append(effect)
 
-    def unit_placable_get(self):
+    def is_unit_exist(self):
         """
         unit_exist: boolを返す
         """
         return self.unit_exist
 
     def type_get(self):
+        """
+        unit_typeを返す
+        """
         return self.type
 
     def position_list_get(self):

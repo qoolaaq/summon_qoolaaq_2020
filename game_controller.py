@@ -6,6 +6,7 @@ from action import *
 from bench import *
 from outside import *
 from action import *
+from skill_processor import *
 
 class GameController:
     """
@@ -20,6 +21,7 @@ class GameController:
         ALL_BENCH_LIST,
         ALL_OUTSIDE_LIST,
         STARTING_MEMBER_LIST,
+        SKILL_PROCESSOR,
         click_position
         ):
         """
@@ -27,9 +29,9 @@ class GameController:
         # [2, 3]みたいな形で取得する
         """
 
+        # 指定した座標のsquareを、clicked_squareとして持っておく
         clicked_square = \
             FIELD[click_position[1]][click_position[0]]
-        # 指定した座標のsquareを、clicked_squareとして持っておく
 
         def clicked_unit_call_from_bench(bench):
             """
@@ -70,7 +72,7 @@ class GameController:
             クリックされた座標のsquareにおけるのか確認
             unit_existがTrueならFalseを返す
             """
-            return not clicked_square.unit_placable_get()
+            return not clicked_square.is_unit_exist()
 
         def reset_all_area_information():
             """
@@ -78,14 +80,14 @@ class GameController:
             """
             for area in ALL_AREA_LIST:
                 area.reset_area_information()
-                print(
-                    "i am {}".format(area.name),
-                    " and my dict is",
-                    area.dictionary,
-                    "and i am occupaied by",
-                    area.occupaied_team
-                    )
-                # for test
+                # print(
+                #     "i am {}".format(area.name),
+                #     " and my dict is",
+                #     area.dictionary,
+                #     "and i am occupaied by",
+                #     area.occupaied_team
+                #     )
+                # # for test
 
         """
         メインの動作
@@ -95,6 +97,21 @@ class GameController:
 
             if not len(ALL_BENCH_LIST[1]) == 0:
             # ベンチにユニットがいるときのみ置くようにした
+                
+                """
+                # for test
+                """
+                # print("#####")
+                # print("#####")
+                # print("#####")
+                # print("#####")
+                print("#####")
+                print("next turn")
+                print("#####")
+                # print("#####")
+                # print("#####")
+                # print("#####")
+                # print("#####")
 
                 #####
                 # FRIEND_BENCH >= ENEMY_BENCHならば、FRIEND＿BENCHからユニットを出す
@@ -113,15 +130,39 @@ class GameController:
                 # unitのposition_listを更新
 
                 """
-                # for test
+                SkillProcessorを動かす
                 """
-                for unit in ALL_UNIT_LIST:
-                    print("#####")
-                    print("my name is", unit.name)
-                    print("my team is", unit.team)
-                    print("i am in", unit.position_list)
-                    print("#####")
+                # 最初のスキルは手動で取り込む
+                if SKILL_PROCESSOR.check_skill_timing(unit.skill, "CIF"):
+                    SKILL_PROCESSOR.load_skill(unit.skill)
+                # あとは勝手に処理してもらう
+                SKILL_PROCESSOR.process_skill(
+                    ALL_UNIT_LIST,
+                    FIELD,
+                    ALL_AREA_LIST,
+                    ALL_BENCH_LIST,
+                    ALL_OUTSIDE_LIST,
+                    STARTING_MEMBER_LIST,
+                    SKILL_PROCESSOR
+                    )
 
+                # """
+                # # for test
+                # """
+                # for unit in ALL_UNIT_LIST:
+                #     print("#####")
+                #     print("my name is", unit.name)
+                #     print("my team is", unit.team)
+                #     print("i am in", unit.position_list)
+                #     print("#####")
+
+                # squareにいるユニットの所在と名前を聞く
+                # # print("for test")
+                # # for row in FIELD:
+                # #     for square in row:
+                # #         if square.unit_exist:
+                # #             print(square.unit.name)
+                # #             print(square.position_list)
 
                 reset_all_area_information()
                 # areaの情報を更新(area.reset_area_dictionary)
